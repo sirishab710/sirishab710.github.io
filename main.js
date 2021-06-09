@@ -11,7 +11,7 @@ function displayMovies(searchValue) {
     let output = "";
     let movies = "";
     while(page <= 100) {
-        axios.get("http://www.omdbapi.com/?i=tt3896198&apikey=14e454be&s="+searchValue+"&type=movie"+"&page="+page)
+        axios.get("https://www.omdbapi.com/?i=tt3896198&apikey=14e454be&s="+searchValue+"&type=movie"+"&page="+page)
         .then((response) => {
             console.log(response);
             movies = response.data.Search;
