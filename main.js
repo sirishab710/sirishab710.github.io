@@ -1,3 +1,4 @@
+//this takes the inputted search value and runs displayMovies() to gather all movies with the specified keyword
 $(document).ready(() => {
     $("#search-form").on("submit", (e) => {
         let searchValue = ($('#search-value').val());
@@ -5,17 +6,19 @@ $(document).ready(() => {
         e.preventDefault();
     })
 });
-
+//this function will display all possible movies
 function displayMovies(searchValue) {
     let page = 1;
     let output = "";
     let movies = "";
+    //the while loop allows for pagination; since the API only returns 10 results at a time, this loop increments the page number to get all results
     while(page <= 100) {
         axios.get("https://www.omdbapi.com/?i=tt3896198&apikey=14e454be&s="+searchValue+"&type=movie"+"&page="+page)
         .then((response) => {
             console.log(response);
             movies = response.data.Search;
             $.each(movies, (index, movie) => {
+                //information about each movie is added here in HTML to display on the page
                 output += `
                 <div class="col-md-4">
                     <div class="well text-center">
@@ -36,12 +39,13 @@ function displayMovies(searchValue) {
         output = "";
     }
 }
+//this keeps track of the movie chosen by the user after searching
 function movieSelected(id) {
     sessionStorage.setItem("movieId", id);
     window.location = "movie.html";
     return false;
 }
-
+//this function displays wanted information about the chosen movie and gives the option to search again or go directly to IMDb
 function movieInfo() {
     let movieId = sessionStorage.getItem("movieId");
     axios.get("https://www.omdbapi.com/?apikey=14e454be&i="+movieId)
